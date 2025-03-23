@@ -4,23 +4,25 @@ import './App.css'
 
 import Button from "./components/button/Button.jsx";
 import Card from "./components/card/Card.jsx";
+import makeUri20 from "./helpers/makeUri20.jsx";
 
 function App() {
     const uri = "https://pokeapi.co/api/v2/";
     const [loading, setLoading] = useState(false);
     const [errorMsg, setErrorMsg] = useState("");
-    const [offset, setOffset] = useState(0);
     const [pokemon, setPokemon] = useState({});
     const [pokemons, setPokemons] = useState([]);
+    const [uri20, setUri20] = useState("https://pokeapi.co/api/v2/pokemon");
+    const [uriPrev, setUriPrev] = useState(null);
+    const [uriNext, setUriNext] = useState(null);
 
     useEffect(() => {
-        async function fetchOnePokemon() {
-            console.log('fetchOnePokemon');
+        async function fetchOnePokemon(name) {
             setLoading(true);
             try {
-                const response = await axios.get(`${uri}/pokemon/ditto`);
-                setPokemon(response.data);
+                const response = await axios.get(`${uri}/pokemon/${name}`);
                 console.log(response.data);
+                setPokemon(response.data);
             } catch (err) {
                 console.error(err);
                 setErrorMsg(err.message);
@@ -28,17 +30,16 @@ function App() {
                 setLoading(false);
             }
         }
-
-        // void fetchOnePokemon();
+        void fetchOnePokemon("zubat");
     }, []);
 
     useEffect(() => {
         const fetch20Pokemon = async () => {
-            console.log('fetch20Pokemon');
             setLoading(true);
             try {
-                const response = await axios.get(`${uri}/pokemon?limit=20&offset=${offset}`);
-                console.log(response.data);
+                const response = await axios.get(uri20);
+                setUriPrev(response.data.previous);
+                setUriNext(response.data.next);
                 setPokemons(response.data.results);
             } catch (err) {
                 console.error(err);
@@ -48,17 +49,21 @@ function App() {
             }
         }
         fetch20Pokemon();
-    }, [offset])
+    }, [uri20])
 
     return (
         <>
             <h1>Gotta catch em all!</h1>
-            <p>offset : {offset}</p>
-            <Button value={offset - 20} onClick={setOffset}>Vorige</Button>
-            <Button value={offset + 20} onClick={setOffset}>Volgende</Button>
+            {loading &&
+                <h2>loading...</h2>
+            }
+            {errorMsg &&
+                <h2>error: {errorMsg}</h2>
+            }
             <Card pokemon={pokemon}/>
-            {
-                pokemons.length > 0 &&
+            <Button disabled={!uriPrev} uri={uriPrev} onClick={setUri20}>Vorige</Button>
+            <Button disabled={!uriNext} uri={uriNext} onClick={setUri20}>Volgende</Button>
+            {pokemons.length > 0 &&
                 <ul>
                     {pokemons.map((pokemon) => (
                         <li key={pokemon.name}>{pokemon.name}</li>

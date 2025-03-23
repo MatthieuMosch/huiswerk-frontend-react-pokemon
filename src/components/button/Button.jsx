@@ -1,9 +1,12 @@
-function Button({value, onClick, children}) {
+import makeUri20 from "../../helpers/makeUri20.jsx";
+
+function Button({disabled, uri, onClick, children}) {
     return (
         <button
             type="button"
-            disabled={value<0}
-            onClick={() => onClick(value)}>
+            disabled={disabled}
+            onClick={() => onClick(makeUri20(uri))}
+        >
             {children}
         </button>
     );
