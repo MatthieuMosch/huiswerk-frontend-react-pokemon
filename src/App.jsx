@@ -11,13 +11,14 @@ function App() {
     const [errorMsg, setErrorMsg] = useState("");
     const [offset, setOffset] = useState(0);
     const [pokemon, setPokemon] = useState({});
+    const [pokemons, setPokemons] = useState([]);
 
     useEffect(() => {
-        async function fetchPokemon() {
-            console.log('fetchPokemon');
+        async function fetchOnePokemon() {
+            console.log('fetchOnePokemon');
             setLoading(true);
             try {
-                const response = await axios.get(`${uri}/pokemon/zubat`);
+                const response = await axios.get(`${uri}/pokemon/ditto`);
                 setPokemon(response.data);
                 console.log(response.data);
             } catch (err) {
@@ -27,16 +28,43 @@ function App() {
                 setLoading(false);
             }
         }
-        void fetchPokemon();
+
+        // void fetchOnePokemon();
     }, []);
+
+    useEffect(() => {
+        const fetch20Pokemon = async () => {
+            console.log('fetch20Pokemon');
+            setLoading(true);
+            try {
+                const response = await axios.get(`${uri}/pokemon?limit=20&offset=${offset}`);
+                console.log(response.data);
+                setPokemons(response.data.results);
+            } catch (err) {
+                console.error(err);
+                setErrorMsg(err.message);
+            } finally {
+                setLoading(false);
+            }
+        }
+        fetch20Pokemon();
+    }, [offset])
 
     return (
         <>
             <h1>Gotta catch em all!</h1>
             <p>offset : {offset}</p>
-            <Button value={offset-20} onClick={setOffset}>Vorige</Button>
-            <Button value={offset+20} onClick={setOffset}>Volgende</Button>
+            <Button value={offset - 20} onClick={setOffset}>Vorige</Button>
+            <Button value={offset + 20} onClick={setOffset}>Volgende</Button>
             <Card pokemon={pokemon}/>
+            {
+                pokemons.length > 0 &&
+                <ul>
+                    {pokemons.map((pokemon) => (
+                        <li key={pokemon.name}>{pokemon.name}</li>
+                    ))}
+                </ul>
+            }
         </>
     )
 }
