@@ -5,6 +5,7 @@ import './App.css'
 import Button from "./components/button/Button.jsx";
 import Card from "./components/card/Card.jsx";
 import makeUri20 from "./helpers/makeUri20.jsx";
+import InfoBox from "./components/infobox/InfoBox.jsx";
 
 function App() {
     const uri = "https://pokeapi.co/api/v2/";
@@ -55,10 +56,10 @@ function App() {
         <>
             <h1>Gotta catch em all!</h1>
             {loading &&
-                <h2>loading...</h2>
+                <InfoBox type="info">Loading...</InfoBox>
             }
             {errorMsg &&
-                <h2>error: {errorMsg}</h2>
+                <InfoBox type="error">{errorMsg}</InfoBox>
             }
             <Card pokemon={pokemon}/>
             <Button disabled={!uriPrev} uri={uriPrev} onClick={setUri20}>Vorige</Button>
