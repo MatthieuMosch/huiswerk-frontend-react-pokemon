@@ -32,7 +32,7 @@ function Card({uri}) {
     }, []);
 
     return (
-        <article>
+        <li className="card">
             {loading && <InfoBox type="info">Loading...</InfoBox>}
             {errorMsg && <InfoBox type="error">{errorMsg}</InfoBox>}
             <h2>{details.name}</h2>
@@ -43,10 +43,10 @@ function Card({uri}) {
             {details.abilities &&
                 <ul>
                     {details.abilities.map((ability) => (
-                        <li key={ability.ability.name}>{ability.ability.name}</li>
+                        <li key={ability.ability.name} className="attributes">{ability.ability.name}</li>
                     ))}
                 </ul>}
-        </article>
+        </li>
     );
 }
 

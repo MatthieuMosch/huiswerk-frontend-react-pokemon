@@ -5,6 +5,7 @@ import './App.css'
 import Button from "./components/button/Button.jsx";
 import Card from "./components/card/Card.jsx";
 import InfoBox from "./components/infobox/InfoBox.jsx";
+import Nav from "./components/nav/Nav.jsx";
 
 function App() {
     const [loading, setLoading] = useState(false);
@@ -40,16 +41,15 @@ function App() {
 
     return (
         <>
-            {loading && <InfoBox type="info">Loading...</InfoBox>}
-            {errorMsg && <InfoBox type="error">{errorMsg}</InfoBox>}
-            <h1>Gotta catch em all!</h1>
-            <nav>
-                <Button disabled={!uriPrev} uri={uriPrev} onClick={setUri20}>Vorige</Button>
-                <Button disabled={!uriNext} uri={uriNext} onClick={setUri20}>Volgende</Button>
-            </nav>
+            <header>
+                <h1>Gotta catch em all!</h1>
+                {loading && <InfoBox type="info">Loading...</InfoBox>}
+                {errorMsg && <InfoBox type="error">{errorMsg}</InfoBox>}
+                <Nav uriPrev={uriPrev} uriNext={uriNext} onClick={setUri20}/>
+            </header>
             <main>
                 {pokemons.length > 0 && (
-                    <ul>
+                    <ul className="deck">
                         {pokemons.map((pokemon) => (
                             <Card key={pokemon.name} uri={pokemon.url}/>
                         ))}

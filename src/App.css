@@ -1,1 +1,15 @@
-/*Schrijf hier jouw eigen CSS!*/
+body {
+    background-color: var(--top-left-color);
+    background: linear-gradient(135deg, var(--top-left-color), var(--bottom-right-color));
+}
+
+h1 {
+    text-align: center;
+}
+
+.deck {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
