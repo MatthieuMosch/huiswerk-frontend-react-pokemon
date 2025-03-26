@@ -1,0 +1,9 @@
+.dialog-error {
+    background: red;
+    color: white;
+}
+
+.dialog-info {
+    background: white;
+    color: black;
+}
