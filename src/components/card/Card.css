@@ -15,11 +15,28 @@
     align-items: center;
 }
 
-.card h2 {
-    text-align: center;
+.card p {
+    width: 100%;
+    padding-left: 1rem;
+    text-align: start;
 }
 
-.card li {
-    background-color: lightgray;
-    padding-left: 10px;
+fieldset {
+    width: 100%;
+    border: none;
+    margin-top: 10px;
+    /*padding-left: 10px;*/
+}
+
+legend {
+    width: 100%;
+    border-bottom: 1px dashed black;
+    background-color: var(--bottom-right-color);
+    padding-left: 1rem;
+}
+
+.attributes {
+    width: 100%;
+    background-color: var(--bottom-right-color);
+    padding-left: 2rem;
 }

@@ -2,9 +2,9 @@ import "./InfoBox.css";
 
 function InfoBox({type, children}) {
     return (
-        <dialog open className={`dialog-${type}`}>
+        <p className={`dialog-${type}`}>
             {children}
-        </dialog>
+        </p>
     );
 }
 

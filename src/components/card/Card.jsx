@@ -12,6 +12,7 @@ function Card({uri}) {
     useEffect(() => {
         const controller = new AbortController();
         async function fetchOnePokemon() {
+            setErrorMsg("");
             setLoading(true);
             try {
                 const response = await axios.get(uri, {signal: controller.signal});
@@ -35,17 +36,19 @@ function Card({uri}) {
         <li className="card">
             {loading && <InfoBox type="info">Loading...</InfoBox>}
             {errorMsg && <InfoBox type="error">{errorMsg}</InfoBox>}
-            <h2>{details.name}</h2>
+            {details.name && <h2>{details.name}</h2>}
             {details.sprites && <img src={details.sprites.front_default}/>}
             {details.moves && <p>moves: {details.moves.length}</p>}
-            <p>weight : {details.weight}</p>
-            <p>abilities:</p>
+            {details.weight && <p>weight : {details.weight}</p>}
             {details.abilities &&
-                <ul>
-                    {details.abilities.map((ability) => (
-                        <li key={ability.ability.name} className="attributes">{ability.ability.name}</li>
-                    ))}
-                </ul>}
+                <fieldset>
+                    <legend>abilities:</legend>
+                    <ul>
+                        {details.abilities.map((ability) => (
+                            <li key={ability.ability.name} className="attributes">{ability.ability.name}</li>
+                        ))}
+                    </ul>
+                </fieldset>}
         </li>
     );
 }

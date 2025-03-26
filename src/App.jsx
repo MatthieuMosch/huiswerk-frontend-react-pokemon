@@ -2,7 +2,6 @@ import {useEffect, useState} from "react";
 import axios from "axios";
 import './App.css'
 
-import Button from "./components/button/Button.jsx";
 import Card from "./components/card/Card.jsx";
 import InfoBox from "./components/infobox/InfoBox.jsx";
 import Nav from "./components/nav/Nav.jsx";
@@ -18,6 +17,7 @@ function App() {
     useEffect(() => {
         const controller = new AbortController();
         const fetch20Pokemon = async () => {
+            setErrorMsg("");
             setLoading(true);
             try {
                 const response = await axios.get(uri20, {signal: controller.signal});
